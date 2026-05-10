@@ -1,0 +1,34 @@
+class Solution {
+public:
+    long long subArrayRanges(vector<int>& nums) {
+        long long ans=0;
+        
+        for(int i=0;i<nums.size();i++){
+            stack<int>maxi;
+            stack<int>mini;
+            maxi.push(nums[i]);
+            mini.push(nums[i]);
+            for(int j=i+1;j<nums.size();j++){
+                ans+=maxi.top()-mini.top();
+                int ele=nums[j];
+                if(ele>maxi.top()){
+                    int top=maxi.top();
+                    maxi.pop();
+                    maxi.push(ele);
+                    if(mini.top()>top){
+                        mini.pop();
+                        mini.push(top);
+                    }
+                }
+                else{
+                    if(ele<mini.top()){
+                        mini.pop();
+                        mini.push(ele);
+                    }
+                }
+            }
+            ans+=maxi.top()-mini.top();
+        }
+        return ans;
+    }
+};
