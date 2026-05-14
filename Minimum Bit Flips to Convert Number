@@ -1,0 +1,16 @@
+lc-2220
+class Solution {
+public:
+    int minBitFlips(int start, int goal) {
+        // int count=0;
+        // while(goal || start){
+        //     int glast=goal&1;
+        //     int slast=start&1;
+        //     if(glast !=slast) count++;
+        //     goal>>=1;
+        //     start>>=1;
+        // }
+        // return count;
+        return __builtin_popcount(start^goal);
+    }
+};
