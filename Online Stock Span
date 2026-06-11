@@ -1,0 +1,40 @@
+class StockSpanner {
+public:
+    stack<pair<int,int>>s;
+    StockSpanner() {
+        
+    }
+    int psee(stack<pair<int,int>>&s){
+        int topEle=s.top().first;
+        s.pop();
+        if(s.empty()){
+            s.push({topEle,1});
+        }
+        else{
+            int preTop=s.top().first;
+            if(preTop<=topEle){
+                int count=0;
+                while(!s.empty() && s.top().first<=topEle){
+                    int freq=s.top().second;
+                    s.pop();
+                    count+=freq;
+                }
+                s.push({topEle,count+1});
+            }
+            else{
+                s.push({topEle,1});
+            }
+        }
+        return s.top().second;
+    }
+    int next(int price) {
+        s.push({price,0});
+        return psee(s);
+    }
+};
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner* obj = new StockSpanner();
+ * int param_1 = obj->next(price);
+ */
