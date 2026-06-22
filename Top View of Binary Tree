@@ -1,0 +1,54 @@
+Top View of Binary Tree
+
+
+
+/*
+class Node {
+  public:
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int val) {
+        data = val;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+*/
+
+class Solution {
+  public:
+    vector<int> topView(Node *root) {
+        // code here
+        if(root==NULL) return {};
+        vector<int>ans;
+        map<int,pair<int,int>>mp;
+        queue<pair<Node*,pair<int,int>>>pq;
+        pq.push({root,{0,0}});
+        while(!pq.empty()){
+            int size=pq.size();
+            for(int i=0;i<size;i++){
+                pair<Node*,pair<int,int>>top=pq.front();
+                pq.pop();
+                Node* node=top.first;
+                int rightIdx=top.second.second;
+                int leftIdx=top.second.first;
+                if(mp.find(leftIdx)==mp.end()){
+                    mp[leftIdx]={rightIdx,node->data};
+                }
+                if(node->left){
+                    pq.push({node->left,{leftIdx-1,rightIdx+1}});
+                }
+                if(node->right){
+                    pq.push({node->right,{leftIdx+1,rightIdx+1}});
+                }
+            }
+        }
+        int currLeft=INT_MIN;
+        for(auto &it:mp){
+            ans.push_back(it.second.second);
+        }
+        return ans;
+    }
+};
